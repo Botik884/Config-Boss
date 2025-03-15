@@ -1,0 +1,173 @@
+Kapibara:
+  Type: HOGLIN
+  Display: "&6☠ Капибара ☠ "
+  Health: 6400
+  Damage: 6
+  Faction: KapybaraTeam
+  BossBar:
+    Enabled: true
+    Title: '&6☠ Капибара ☠'
+    Range: 15
+    Color: ORANGE
+    Style: SOLID
+    CreateFog: false
+    DarkenSky: false
+    PlayMusic: false
+  Options:
+    Baby: false
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    AlwaysShowName: true
+    MovementSpeed: 0.3
+    KnockbackResistance: 1.0
+    PreventSunburn: true
+    PreventImmunityFrames: true
+    PreventBlockInfection: true
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  - randomstroll
+  - lookatplayers
+  - randomtarget {r=20}
+  AITargetSelectors:
+  - clear
+  - players
+  Skills:
+      - effect:particles{particle=cloud;amount=20} @Self ~onAttack
+      - velocity{velocity=0.5;velocityY=1.5;velocityX=0.5} @Target ~onAttack
+      - damage{a=9} 
+      - damage{a=<skill.var.damage-amount>/3;ai=true} @target ~onDamaged
+      - effect:particles{particle=crit;amount=10} @Trigger ~onDamaged
+      - skill:RandomSummon @Self ~onTimer:400
+      - skill:Attack @NearestPlayer ~onTimer:500
+      - skill:ArcAttack @NearestPlayer ~onTimer:700
+
+Zoglins: #Пометка для Botik_884 ( ярый)
+  Type: ZOGLIN
+  Display: "&eЯрый Зоглин"
+  Health: 160
+  Damage: 30
+  Faction: KapybaraTeam
+  Options:
+    PreventOtherDrops: true
+    MovementSpeed: 0.4
+    Despawn: true
+    DespawnDelay: 200
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  - randomstroll
+  - randomtarget {r=20}
+  AITargetSelectors:
+  - clear
+  - players
+  Skills:
+  - velocity{velocity=0.3;velocityY=0.8;velocityX=0.3} @Target ~onAttack
+  - effect:particles{particle=crit;amount=5} @Target ~onAttack
+
+Brutes: #Пометка для Botik_884 ( Брут)
+  Type: PIGLIN_BRUTE
+  Display: "&eБрутальный Пиг"
+  Health: 150
+  Damage: 16
+  Faction: KapybaraTeam
+  Options:
+    PreventOtherDrops: true
+    MovementSpeed: 0.35
+    Despawn: true
+    DespawnDelay: 200
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  - randomstroll
+  - randomtarget {r=20}
+  AITargetSelectors:
+  - clear
+  - players
+  Skills:
+  - effect:particles{particle=crit;amount=5} @Target ~onAttack
+
+PigExplosions: #Пометка для Botik_884 (Взрыв)
+  Type: PIG
+  Display: "&eУбегающий Свин"
+  Health: 40
+  Damage: 0
+  Faction: KapybaraTeam
+  Options:
+    PreventOtherDrops: true
+    MovementSpeed: 0.3
+    Despawn: false
+    Persistent: true
+    KnockbackResistance: 0.3
+  AIGoalSelectors:
+    - clear
+    - avoidplayers{radius=10;speed=1.5}
+    - randomstroll
+  AITargetSelectors:
+    - clear
+  Skills:
+  - skill:ExplodeOrTransform @Self ~onTimer:160
+  - skill:ExplodeOrTransform @Self ~onDeath
+
+BabyPigExplosions: #Пометка для Botik_884 (Маленькая свинка(Взрыв))
+  Type: PIG
+  Display: '&cБах-свинкичь'
+  Health: 5
+  Damage: 0
+  Faction: KapybaraTeam
+  Options:
+    Baby: true
+    PreventOtherDrops: true
+    MovementSpeed: 0.5
+    Despawn: false
+  AIGoalSelectors:
+    - clear
+    - hurttarget
+    - meleeattack
+    - randomstroll
+    - followtarget 1.0
+  AITargetSelectors:
+    - clear
+    - players
+    - attacker
+  Modules:
+    ThreatTable: true
+  DamageModifiers:
+   - EXPLOSION 0.0
+  Skills:
+    - effect:particles{particle=smoke;amount=3;yoffset=0.5} @self ~onTimer:5
+    - effect:sound{sound=entity.pig.ambient;volume=0.8;pitch=1.5} @self ~onTimer:200
+    - target{r=10;livingentities=true;type=PLAYER} ~onSpawn
+    - skill:CheckPlayers @Self ~onTimer:10
+    - skill:Explode @Self ~onAttack
+    - skill:Explode @Self ~onDamaged
+    - skill:Explode @Self ~onInteract
+
+Piglins: #Пометка для Botik_884 ( Арбалет)
+  Type: PIGLIN
+  Display: "&eПиглин Арбалетчик"
+  Health: 60
+  Damage: 3
+  Faction: KapybaraTeam
+  Options:
+    PreventOtherDrops: true
+    MovementSpeed: 0.3
+    Despawn: true
+    DespawnDelay: 200
+  Equipment:
+  - CROSSBOW:0 PIERCE:4,QUICK_CHARGE:3
+  AIGoalSelectors:
+  - clear
+  - shootattack
+  - randomstroll
+  - randomlookaround
+  - randomtarget {r=20}
+  AITargetSelectors:
+  - clear
+  - players
+  Skills:
+  - effect:particles{particle=crit;amount=5} @Target ~onAttack
+  - velocity{velocity=0.2;velocityY=0.2;velocityX=0.2} @Target ~onAttack
+
+#Дальше код Создателя Плагина!
+# Удалил чтобы не мешался)))

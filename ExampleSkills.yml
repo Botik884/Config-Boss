@@ -1,0 +1,103 @@
+# Удалил код автора плагина, чтобы не мешался))
+# Ниже код разрабочика Botik_884
+
+RandomSummon:
+  Skills:
+    - randomskill{s=SummonZoglins,SummonBrutes,SummonPiglins,PigExplosion_Summon}
+
+SummonZoglins:
+  Skills:
+      - summon{type=Zoglins;amount=15;radius=5to10;yoff=1} @self
+      - effect:particles{particle=portal;amount=50;radius=10} @Self
+      - sound{s=entity.hoglin.angry;v=1.0;p=0.5} @Self
+
+SummonBrutes:
+  Skills:
+      - summon{type=Brutes;amount=10;radius=5} @Self
+      - effect:particles{particle=angry_villager;amount=50;radius=to10;yoff=1} @Self
+      - sound{s=entity.piglin_brute.angry;v=1.0;p=0.5} @Self
+
+SummonPiglins:
+  Skills:
+      - summon{type=Piglins;amount=10;radius=5to10;yoff=1} @self
+      - effect:particles{particle=crimson_spore;amount=50;radius=10} @Self
+      - sound{s=entity.piglin.ambient;v=1.0;p=0.5} @Self
+
+PigExplosion_Summon:
+  Skills:
+      - summon{type=PigExplosions;amount=5;radius=5to10;yoff=1} @Self
+      - effect:particles{particle=flame;amount=50;radius=10} @Self
+      - sound{s=entity.pig.ambient;v=1.0;p=0.5} @Self
+
+ExplodeOrTransform:
+  Skills:
+      - summon{m=BabyPigExplosions;amt=3;r=0.1} @Self
+      - remove
+
+Explode:
+  Skills:
+      - effect:particles{particle=explosion_large;amount=15} @Self
+      - effect:sound{s=entity.generic.explode;v=1.0;p=1.0} @Self 
+      - damage{a=20;i=true;pkb=false} @PlayersInRadius{r=3}
+      - velocity{velocity=0.5;velocityY=0.7;velocityX=0.5} @PlayersInRadius{r=1}
+      - remove
+
+CheckPlayers:
+  Skills:
+    - target{r=10;livingentities=true;type=PLAYER} 
+    - look @target
+    - delay 60
+    - skill{s=Explode} @self
+
+Faction:
+  KapybaraTeam:
+    FriendlyMobs:
+    - Kapybara
+    - Zoglins
+    - Brutes
+    - PigExplosions
+    - BabyPigExplosions
+    - Piglins
+
+#Прыжки босса
+
+Attack:
+  Skills:
+    - target{r=20;targettype=NEAREST;type=PLAYER;selection=NEAREST}
+    - message{m="&6&l&nКапибара&r прыжок"} @PlayersInRadius{r=30}
+    - effect:particles{particle=cloud;amount=20;hspread=1;vspread=1} @self
+    - effect:sound{sound=entity.ravager.roar;volume=1.0} @self
+    - potion{type=DAMAGE_RESISTANCE;duration=60;level=3} @self
+    - effect:particlering{particle=cloud;radius=2;points=20;yoffset=0} @self
+    - effect:sound{sound=entity.ravager.attack;volume=1.0} @self
+    - teleport{y=+6.5} @self
+    - delay 20
+    - effect:particles{particle=explosion;amount=10} @self
+    - effect:sound{sound=entity.generic.explode;volume=0.8} @self
+    - teleport{toTarget=true;offset=0,2,0} @target
+    - delay 2
+    - velocity{velocity=0,0,0} @self
+    - effect:sound{sound=entity.ravager.attack;volume=1.0} @self
+    - effect:particles{particle=explosion_large;amount=15} @self
+    - damage{amount=20;ignoreArmor=false} @PlayersInRadius{r=3}
+    - potion{type=BLINDNESS;duration=40;level=1} @PlayersInRadius{r=3}
+
+ArcAttack:
+  Skills:
+    - target{r=20;targettype=NEAREST;type=PLAYER;selection=NEAREST} @self
+    - message{m="&6&l&nКапибара&r дуговая!"} @PlayersInRadius{r=30}
+    - effect:particles{particle=cloud;amount=20;hspread=1;vspread=1} @self
+    - effect:sound{sound=entity.ravager.roar;volume=1.0} @self
+    - potion{type=DAMAGE_RESISTANCE;duration=60;level=3} @self
+    - effect:particlering{particle=cloud;radius=2;points=20} @self
+    - effect:sound{sound=entity.ravager.attack;volume=1.0} @self
+    - jump @self
+    - delay 10
+    - effect:particles{particle=explosion;amount=5} @self
+    - effect:sound{sound=entity.generic.explode;volume=0.6} @self
+    - teleport{toTarget=true;offset=0,3,0} @target
+    - delay 5
+    - effect:particles{particle=explosion_large;amount=15} @self
+    - effect:sound{sound=entity.ravager.attack;volume=1.0} @self
+    - damage{amount=20} @PlayersInRadius{r=3}
+    - potion{type=SLOW;duration=40;level=2} @PlayersInRadius{r=3}
